@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:grok="http://namespaces.zope.org/grok"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="sc.easynewsletter.policy">
+
+  <includeDependencies package="." />
+  
+  <grok:grok package="." />
+
+  <include file="profiles.zcml" />
+
+
+</configure>
