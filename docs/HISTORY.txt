@@ -1,15 +1,16 @@
 Changelog
 ----------
+
 1.1dev (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
  * Patch Parser to make sure we DO NOT embed images on the mail [ericof]
 
-1.0 (2012-01-31)
-^^^^^^^^^^^^^^^^^^
+1.0 (2012-01-21)
+^^^^^^^^^^^^^^^^
 
  *  Initial release
-    [ericof]
+    [cleberjsantos]
 
  *  Package created using templer
     [Simples Consultoria]
