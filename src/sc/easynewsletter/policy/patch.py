@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+import urllib
+import urlparse
 from Products.EasyNewsletter.content import EasyNewsletter
 from Products.EasyNewsletter.content import ENLIssue
+from Products.EasyNewsletter.utils.ENLHTMLParser import ENLHTMLParser
 
 
 HIDE = {'view': 'invisible', 'edit': 'invisible'}
@@ -18,6 +21,7 @@ def patch_newsletter():
     schema['subscriberSource'].widget.visible = HIDE
     schema['deliveryService'].widget.visible = HIDE
     EasyNewsletter.schema = schema
+
 
 def patch_issue():
     # Patch Newsletter
@@ -39,8 +43,31 @@ def patch_issue():
     schema['excludeFromNav'].schemata = "settings"
     ENLIssue.schema = schema
 
+
+def patch_image_parser():
+    def handle_startendtag(self, tag, attrs):
+        """
+        """
+        self.html += "<%s" % tag
+        for attr in attrs:
+            if attr[0] == "src":
+                image_url = urlparse.urlparse(attr[1]).path
+                if 'http' in attr[1]:
+                    url = attr[1]
+                    self.html += ' src="%s"' % url
+                else:
+                    o = self.context.restrictedTraverse(
+                                    urllib.unquote(image_url))
+                    url = o.absolute_url()
+                    self.html += ' src="%s"' % url
+            else:
+                self.html += ' %s="%s"' % (attr)
+
+        self.html += " />"
+    setattr(ENLHTMLParser, 'handle_startendtag', handle_startendtag)
+
+
 def run():
     patch_newsletter()
     patch_issue()
-
-
+    patch_image_parser()
