@@ -1,7 +1,7 @@
 Changelog
 ----------
 
-1.1dev (unreleased)
+1.0.1 (2012-05-16)
 ^^^^^^^^^^^^^^^^^^^
 
  * Patch Parser to make sure we DO NOT embed images on the mail [ericof]

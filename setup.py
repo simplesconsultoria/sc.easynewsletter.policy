@@ -2,7 +2,7 @@
 import os
 from setuptools import setup, find_packages
 
-version = '1.0'
+version = '1.0.1'
 
 setup(name='sc.easynewsletter.policy',
       version=version,
