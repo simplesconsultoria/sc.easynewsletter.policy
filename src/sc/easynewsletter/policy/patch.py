@@ -51,15 +51,25 @@ def patch_image_parser():
         self.html += "<%s" % tag
         for attr in attrs:
             if attr[0] == "src":
+                image_size = []
                 image_url = urlparse.urlparse(attr[1]).path
                 if 'http' in attr[1]:
                     url = attr[1]
                     self.html += ' src="%s"' % url
                 else:
+                    path_parts = image_url.split('/')
+                    # Check if url points to a sizing
+                    if 'image' in path_parts[-1]:
+                        image_url = '/'.join(path_parts[:-1])
+                        image_size = path_parts[-1:]
+                    elif '@@images' in path_parts:
+                        image_url = '/'.join(
+                                    path_parts[:path_parts.index('@@images')])
+                        image_size = path_parts[path_parts.index('@@images'):]
                     o = self.context.restrictedTraverse(
                                     urllib.unquote(image_url))
                     url = o.absolute_url()
-                    self.html += ' src="%s"' % url
+                    self.html += ' src="%s/%s"' % (url, '/'.join(image_size))
             else:
                 self.html += ' %s="%s"' % (attr)
 
